@@ -11,7 +11,7 @@
 <style>
 :root{
   --paper:#F2F4F1; --ink:#1F2A24; --muted:#56635B; --rule:#CBD3CD;
-  --red:#B8322A; --yellow:#D9A21B; --todo:#FFF1B8; --todo-ink:#5A4300;
+  --red:#B8322A; --yellow:#D9A21B; --blue:#2E6F9E; --todo:#FFF1B8; --todo-ink:#5A4300;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -19,12 +19,12 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --paper:#141B17; --ink:#E4E9E5; --muted:#9AA79F; --rule:#2E3A33;
-    --red:#E0594E; --yellow:#E8B940; --todo:#4A3D10; --todo-ink:#FFE7A0;
+    --red:#E0594E; --yellow:#E8B940; --blue:#6FA8D6; --todo:#4A3D10; --todo-ink:#FFE7A0;
   }
 }
 :root[data-theme="dark"]{
   --paper:#141B17; --ink:#E4E9E5; --muted:#9AA79F; --rule:#2E3A33;
-  --red:#E0594E; --yellow:#E8B940; --todo:#4A3D10; --todo-ink:#FFE7A0;
+  --red:#E0594E; --yellow:#E8B940; --blue:#6FA8D6; --todo:#4A3D10; --todo-ink:#FFE7A0;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -55,10 +55,10 @@ header.hero{padding:4.5rem 0 2.5rem}
 
 .locus{margin:2.75rem 0 0; width:100%; max-width:100%; height:auto; display:block; overflow:visible}
 .locus .track{stroke:var(--ink); stroke-width:1.5}
-.locus .cre{fill:var(--yellow)}
+.locus .pop-a{fill:var(--yellow)}
+.locus .pop-b{fill:var(--blue)}
 .locus .gene{fill:var(--red)}
 .locus .loop{fill:none; stroke:var(--red); stroke-width:1.5; opacity:.85}
-.locus .loop.faint{stroke:var(--muted); opacity:.5}
 .locus text{fill:var(--muted); font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:13px}
 .locus text.gname{fill:var(--ink); font-family:"Newsreader",Georgia,serif; font-style:italic; font-size:17px}
 .loop{stroke-dasharray:600; stroke-dashoffset:600; animation:draw 1.6s ease-out forwards}
@@ -66,6 +66,16 @@ header.hero{padding:4.5rem 0 2.5rem}
 .loop:nth-of-type(3){animation-delay:.5s}
 @keyframes draw{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){.loop{animation:none; stroke-dashoffset:0}}
+.locus .bound{fill:var(--red); stroke:var(--paper); stroke-width:1.5; opacity:0; animation:appear .4s ease-out forwards}
+.locus .bound:nth-of-type(1){animation-delay:1s}
+.locus .bound:nth-of-type(2){animation-delay:1.25s}
+.locus .bound:nth-of-type(3){animation-delay:1.5s}
+@keyframes appear{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.locus .bound{animation:none; opacity:1}}
+.key{font-weight:500}
+.key::before{content:""; display:inline-block; width:.7em; height:.7em; border-radius:2px; margin-right:.3em; vertical-align:-.05em}
+.key-a::before{background:var(--yellow)}
+.key-b::before{background:var(--blue)}
 figcaption{font-size:.85rem; color:var(--muted); margin-top:.5rem}
 
 /* Sections */
@@ -112,19 +122,22 @@ footer{border-top:1px solid var(--rule); padding:2rem 0 3rem; font-size:.9rem; c
   </div>
 
   <figure style="margin:0">
-    <svg class="locus" viewBox="0 0 680 150" role="img" aria-label="Schematic of a genomic region: regulatory elements looping in three dimensions to contact the optix gene">
-      <path class="loop" d="M88 104 Q 270 -30 452 104"/>
-      <path class="loop" d="M196 104 Q 324 10 452 104"/>
-      <path class="loop faint" d="M300 104 Q 376 50 452 104"/>
+    <svg class="locus" viewBox="0 0 680 150" role="img" aria-label="Schematic: the optix gene makes the Optix protein, which binds regulatory elements from two different colour pattern populations">
+      <path class="loop" d="M228 98 Q 304 44 378 94"/>
+      <path class="loop" d="M228 98 Q 356 4 482 94"/>
+      <path class="loop" d="M228 98 Q 410 -36 590 94"/>
       <line class="track" x1="10" y1="110" x2="670" y2="110"/>
-      <rect class="cre" x="78" y="102" width="20" height="16" rx="2"/>
-      <rect class="cre" x="186" y="102" width="20" height="16" rx="2"/>
-      <rect class="cre" x="290" y="102" width="20" height="16" rx="2"/>
-      <rect class="gene" x="432" y="98" width="72" height="24" rx="2"/>
-      <text class="gname" x="468" y="143" text-anchor="middle">optix</text>
-      <text x="196" y="140" text-anchor="middle">regulatory elements</text>
+      <rect class="gene" x="176" y="98" width="72" height="24" rx="2"/>
+      <rect class="cre pop-a" x="370" y="102" width="20" height="16" rx="2"/>
+      <rect class="cre pop-b" x="474" y="102" width="20" height="16" rx="2"/>
+      <rect class="cre pop-a" x="582" y="102" width="20" height="16" rx="2"/>
+      <circle class="bound" cx="380" cy="97" r="6"/>
+      <circle class="bound" cx="484" cy="97" r="6"/>
+      <circle class="bound" cx="592" cy="97" r="6"/>
+      <text class="gname" x="212" y="143" text-anchor="middle">optix</text>
+      <text x="484" y="140" text-anchor="middle">regulatory elements</text>
     </svg>
-    <figcaption class="sans">Distant switches in the genome loop in 3D to reach <i>optix</i>, a gene that paints red onto <i>Heliconius</i> wings.</figcaption>
+    <figcaption class="sans">The <i>optix</i> gene makes Optix, a protein that binds regulatory switches controlling other wing pattern genes. I combine 3D genome, chromatin and gene expression sequencing with population genetics to map this network, and to show that its switches (<span class="key key-a">yellow</span> and <span class="key key-b">blue</span>) come from different colour pattern populations.</figcaption>
   </figure>
 </header>
 
